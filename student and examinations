@@ -1,0 +1,13 @@
+SELECT a.student_id, a.student_name, b.subject_name, 
+       COUNT(c.student_id) AS attended_exams
+FROM Students a
+CROSS JOIN Subjects b
+LEFT JOIN Examinations c ON a.student_id = c.student_id AND b.subject_name = c.subject_name
+GROUP BY a.student_id, a.student_name, b.subject_name
+ORDER BY a.student_id, b.subject_name;
+
+CROSS JOIN between Students and Subjects: This creates a cartesian product so that each student is paired with every subject, ensuring all possible combinations of students and subjects are included.
+
+LEFT JOIN with Examinations: This ensures that even if a student has not attended any exams for a particular subject, the row will still appear with a NULL in Examinations.
+
+COUNT(c.student_id): This will count the number of exams attended by the student. If no exams were attended, the count will return 0.
